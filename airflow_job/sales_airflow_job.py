@@ -26,7 +26,7 @@ dag = DAG(
     'sales_data_DAG',
     default_args=default_args,
     description='A DAG to setup dataproc and run Spark job on that and then delete Cluster',
-    schedule_interval=None,  # To Change it later for daily
+    schedule_interval='0 0 * * *',
     catchup=False,
     tags=['dev'],
 )
