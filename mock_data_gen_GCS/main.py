@@ -145,9 +145,12 @@ def genearete_product_and_sales_data(request: Request):
     PROJECT_ID  = "airflow-dataproc-project"
     # Google Cloud Storage Bucket
     STORAGE_BUCKET = 'airflow-p1-sales-data'
+    ARCHIVE_BUCKET = 'airflow-p1-sales-data-archive'
     storage_client = storage.Client(project=PROJECT_ID)
     bucket_instance = storage_client.bucket(STORAGE_BUCKET)
-
+    archive_bukcet_instance = storage_client.bucket(ARCHIVE_BUCKET)
+    
+    # Dates
     TODAY = datetime.date.today().strftime('%Y-%m-%d')
     today_date_obj = datetime.datetime.strptime(TODAY, '%Y-%m-%d').date()
     start_date_obj = today_date_obj - datetime.timedelta(days=10)
@@ -158,10 +161,10 @@ def genearete_product_and_sales_data(request: Request):
         for date in dates:
 
             sales_blob_name = f'sales_data_for_{date}.csv'
-            sales_blob = bucket_instance.blob(sales_blob_name)
+            archive_sales_blob = archive_bukcet_instance.blob(sales_blob_name)
             products_catalog = generate_product_catalog_data(NUM_PRODUCTS, date)
             
-            if sales_blob.exists():
+            if archive_sales_blob.exists():
                 print(f'{sales_blob_name} exist, no taking actions') 
             else:
                 print(f'{sales_blob_name} does not exists, creating file')
