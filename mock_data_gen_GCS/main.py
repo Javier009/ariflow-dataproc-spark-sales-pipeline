@@ -140,9 +140,8 @@ def upload_tuples_to_gcs_as_csv(bucket_instance_obj, bucket, destination_blob_na
         print(f"An error occurred while uploading {destination_blob_name}: {e}")
         
 # Send data to Cloud storage
-# def genearete_product_and_sales_data(request: Request):
-def genearete_product_and_sales_data():
-    
+def genearete_product_and_sales_data(request: Request):
+
     PROJECT_ID  = "airflow-dataproc-project"
     # Google Cloud Storage Bucket
     STORAGE_BUCKET = 'airflow-p1-sales-data'
@@ -174,5 +173,3 @@ def genearete_product_and_sales_data():
     except Exception as e:
         return  f"❌ Errors encountered plase review, {e} rows", 500
         
-            
-genearete_product_and_sales_data()
